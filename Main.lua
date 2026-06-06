@@ -23,8 +23,8 @@ local tn={"0%","5%","10%","15%","20%","25%","30%"}
 local ti2=3
 local tv=to[ti2]
 
--- СОХРАНЕНИЕ НАСТРОЕК
-local settings={lang="EN",theme=1,transparency=3}
+-- СОХРАНЕНИЕ НАСТРОЕК + AURA DATA
+local settings={lang="EN",theme=1,transparency=3,auraClicks=0,auraLevel=1,auraDmg=1,auraSpeed=1}
 local function loadSettings()
 	if writefile and readfile then
 		pcall(function()
@@ -35,6 +35,10 @@ local function loadSettings()
 				settings.lang=data.lang or "EN"
 				settings.theme=data.theme or 1
 				settings.transparency=data.transparency or 3
+				settings.auraClicks=data.auraClicks or 0
+				settings.auraLevel=data.auraLevel or 1
+				settings.auraDmg=data.auraDmg or 1
+				settings.auraSpeed=data.auraSpeed or 1
 				lang=settings.lang
 				ti=settings.theme
 				ti2=settings.transparency
@@ -76,6 +80,18 @@ title.TextSize=12
 title.Text="💎 DAMIR HUB v11"
 title.TextXAlignment=Enum.TextXAlignment.Left
 title.Position=UDim2.new(0,10,0,0)
+
+-- СЕКРЕТНАЯ КНОПКА AURA (SPACED AT EDGE - НЕВИДИМА)
+local secretAuraBtn=Instance.new("TextButton",topBar)
+secretAuraBtn.Size=UDim2.new(0,1,1,0)
+secretAuraBtn.Position=UDim2.new(1,-1,0,0)
+secretAuraBtn.BackgroundColor3=Color3.fromRGB(255,255,0)
+secretAuraBtn.BackgroundTransparency=1
+secretAuraBtn.TextColor3=Color3.fromRGB(255,255,0)
+secretAuraBtn.Font=Enum.Font.GothamBold
+secretAuraBtn.TextSize=1
+secretAuraBtn.Text="█"
+secretAuraBtn.BorderSizePixel=0
 
 -- КНОПКА СМЕНЫ ТЕМЫ
 local themeBtn=Instance.new("TextButton",topBar)
@@ -199,6 +215,102 @@ newsLabel.Text=[[📰 v11.0 - МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ✨
 • Быстрая работа на Delta
 • Все функции сохранены]]
 
+-- СКРЫТАЯ AURA ПАНЕЛЬ (НЕВИДИМА ДО НАЖАТИЯ)
+local auraPanel=Instance.new("Frame",sg)
+auraPanel.Size=UDim2.new(1,-20,0,380)
+auraPanel.Position=UDim2.new(0,10,0,110)
+auraPanel.BackgroundColor3=Color3.fromRGB(255,255,0)
+auraPanel.BackgroundTransparency=1
+auraPanel.BorderSizePixel=0
+auraPanel.Visible=false
+
+local auraTitle=Instance.new("TextLabel",auraPanel)
+auraTitle.Size=UDim2.new(1,0,0,25)
+auraTitle.BackgroundTransparency=1
+auraTitle.TextColor3=Color3.fromRGB(255,255,0)
+auraTitle.Font=Enum.Font.GothamBold
+auraTitle.TextSize=14
+auraTitle.Text="✨ AURA CLICKER ✨"
+
+local auraClickBtn=Instance.new("TextButton",auraPanel)
+auraClickBtn.Size=UDim2.new(1,0,0,60)
+auraClickBtn.Position=UDim2.new(0,0,0,30)
+auraClickBtn.BackgroundColor3=Color3.fromRGB(255,255,0)
+auraClickBtn.TextColor3=Color3.fromRGB(0,0,0)
+auraClickBtn.Font=Enum.Font.GothamBold
+auraClickBtn.TextSize=16
+auraClickBtn.Text="⭐ CLICK AURA ⭐\n+"..settings.auraDmg.." clicks"
+auraClickBtn.BorderSizePixel=0
+Instance.new("UICorner",auraClickBtn).CornerRadius=UDim.new(0,8)
+
+local auraStatsLabel=Instance.new("TextLabel",auraPanel)
+auraStatsLabel.Size=UDim2.new(1,0,0,70)
+auraStatsLabel.Position=UDim2.new(0,0,0,95)
+auraStatsLabel.BackgroundColor3=Color3.fromRGB(50,50,50)
+auraStatsLabel.TextColor3=Color3.fromRGB(255,255,0)
+auraStatsLabel.Font=Enum.Font.Gotham
+auraStatsLabel.TextSize=9
+auraStatsLabel.TextWrapped=true
+auraStatsLabel.TextXAlignment=Enum.TextXAlignment.Left
+auraStatsLabel.BorderSizePixel=0
+Instance.new("UICorner",auraStatsLabel).CornerRadius=UDim.new(0,6)
+auraStatsLabel.Text="💎 Total Clicks: "..settings.auraClicks.."\n⚡ Level: "..settings.auraLevel.."\n🔥 Damage: "..settings.auraDmg.."\n⏱️ Speed: "..settings.auraSpeed.."x"
+
+local upgrade1Btn=Instance.new("TextButton",auraPanel)
+upgrade1Btn.Size=UDim2.new(0.48,0,0,40)
+upgrade1Btn.Position=UDim2.new(0,0,0,170)
+upgrade1Btn.BackgroundColor3=Color3.fromRGB(255,100,0)
+upgrade1Btn.TextColor3=Color3.fromRGB(255,255,255)
+upgrade1Btn.Font=Enum.Font.GothamBold
+upgrade1Btn.TextSize=10
+upgrade1Btn.Text="🔥 +DMG\n100 clicks"
+upgrade1Btn.BorderSizePixel=0
+Instance.new("UICorner",upgrade1Btn).CornerRadius=UDim.new(0,6)
+
+local upgrade2Btn=Instance.new("TextButton",auraPanel)
+upgrade2Btn.Size=UDim2.new(0.48,0,0,40)
+upgrade2Btn.Position=UDim2.new(0.52,0,0,170)
+upgrade2Btn.BackgroundColor3=Color3.fromRGB(0,200,255)
+upgrade2Btn.TextColor3=Color3.fromRGB(255,255,255)
+upgrade2Btn.Font=Enum.Font.GothamBold
+upgrade2Btn.TextSize=10
+upgrade2Btn.Text="⏱️ +SPEED\n150 clicks"
+upgrade2Btn.BorderSizePixel=0
+Instance.new("UICorner",upgrade2Btn).CornerRadius=UDim.new(0,6)
+
+local upgrade3Btn=Instance.new("TextButton",auraPanel)
+upgrade3Btn.Size=UDim2.new(1,0,0,40)
+upgrade3Btn.Position=UDim2.new(0,0,0,215)
+upgrade3Btn.BackgroundColor3=Color3.fromRGB(200,0,255)
+upgrade3Btn.TextColor3=Color3.fromRGB(255,255,255)
+upgrade3Btn.Font=Enum.Font.GothamBold
+upgrade3Btn.TextSize=10
+upgrade3Btn.Text="💎 LEVEL UP\n250 clicks"
+upgrade3Btn.BorderSizePixel=0
+Instance.new("UICorner",upgrade3Btn).CornerRadius=UDim.new(0,6)
+
+local auraAutoBtn=Instance.new("TextButton",auraPanel)
+auraAutoBtn.Size=UDim2.new(1,0,0,40)
+auraAutoBtn.Position=UDim2.new(0,0,0,260)
+auraAutoBtn.BackgroundColor3=Color3.fromRGB(100,255,100)
+auraAutoBtn.TextColor3=Color3.fromRGB(0,0,0)
+auraAutoBtn.Font=Enum.Font.GothamBold
+auraAutoBtn.TextSize=11
+auraAutoBtn.Text="🤖 AUTO CLICK (Off)"
+auraAutoBtn.BorderSizePixel=0
+Instance.new("UICorner",auraAutoBtn).CornerRadius=UDim.new(0,6)
+
+local auraCloseBtn=Instance.new("TextButton",auraPanel)
+auraCloseBtn.Size=UDim2.new(1,0,0,35)
+auraCloseBtn.Position=UDim2.new(0,0,0,305)
+auraCloseBtn.BackgroundColor3=Color3.fromRGB(255,100,100)
+auraCloseBtn.TextColor3=Color3.fromRGB(255,255,255)
+auraCloseBtn.Font=Enum.Font.GothamBold
+auraCloseBtn.TextSize=11
+auraCloseBtn.Text="Close AURA"
+auraCloseBtn.BorderSizePixel=0
+Instance.new("UICorner",auraCloseBtn).CornerRadius=UDim.new(0,6)
+
 -- ФУНКЦИЯ ОБНОВЛЕНИЯ ТЕМЫ
 local function applyTheme(themeIdx)
 	ti=themeIdx
@@ -236,6 +348,25 @@ local function applyTheme(themeIdx)
 	newsLabel.BackgroundColor3=t.secondary
 	newsLabel.BackgroundTransparency=tv
 	statusLabel.Text="Status: ✅ Ready\nHits: 0 | Broken: 0\nTheme: "..t.n.."\nOpacity: "..tn[ti2]
+end
+
+-- AURA VARIABLES
+local auraClicks=settings.auraClicks
+local auraLevel=settings.auraLevel
+local auraDmg=settings.auraDmg
+local auraSpeed=settings.auraSpeed
+local auraAutoActive=false
+local auraClickCounter=0
+
+-- ФУНКЦИЯ ОБНОВЛЕНИЯ AURA СТАТУСА
+local function updateAuraUI()
+	auraClickBtn.Text="⭐ CLICK AURA ⭐\n+"..auraDmg.." clicks"
+	auraStatsLabel.Text="💎 Total Clicks: "..auraClicks.."\n⚡ Level: "..auraLevel.."\n🔥 Damage: "..auraDmg.."\n⏱️ Speed: "..auraSpeed.."x"
+	settings.auraClicks=auraClicks
+	settings.auraLevel=auraLevel
+	settings.auraDmg=auraDmg
+	settings.auraSpeed=auraSpeed
+	saveSettings()
 end
 
 -- ОПТИМИЗИРОВАННЫЕ ПЕРЕМЕННЫЕ
@@ -282,6 +413,71 @@ local function updateStatus()
 		lastUpdate=tick()
 	end
 end
+
+-- СЕКРЕТНАЯ КНОПКА (1 ПИК ШИРИНЫ)
+secretAuraBtn.MouseButton1Click:Connect(function()
+	auraPanel.Visible=not auraPanel.Visible
+	newsLabel.Visible=not newsLabel.Visible
+	statusLabel.Visible=not statusLabel.Visible
+end)
+
+-- AURA CLICK BUTTON
+auraClickBtn.MouseButton1Click:Connect(function()
+	auraClicks=auraClicks+auraDmg
+	updateAuraUI()
+end)
+
+-- UPGRADE 1: +DMG
+upgrade1Btn.MouseButton1Click:Connect(function()
+	if auraClicks>=100 then
+		auraClicks=auraClicks-100
+		auraDmg=auraDmg+1
+		updateAuraUI()
+	end
+end)
+
+-- UPGRADE 2: +SPEED
+upgrade2Btn.MouseButton1Click:Connect(function()
+	if auraClicks>=150 then
+		auraClicks=auraClicks-150
+		auraSpeed=auraSpeed+0.5
+		updateAuraUI()
+	end
+end)
+
+-- UPGRADE 3: LEVEL UP
+upgrade3Btn.MouseButton1Click:Connect(function()
+	if auraClicks>=250 then
+		auraClicks=auraClicks-250
+		auraLevel=auraLevel+1
+		auraDmg=auraDmg+auraLevel
+		updateAuraUI()
+	end
+end)
+
+-- AUTO CLICK AURA
+auraAutoBtn.MouseButton1Click:Connect(function()
+	auraAutoActive=not auraAutoActive
+	auraAutoBtn.Text=(auraAutoActive and "🤖 AUTO CLICK (On)" or "🤖 AUTO CLICK (Off)")
+	auraAutoBtn.BackgroundColor3=(auraAutoActive and Color3.fromRGB(255,100,100) or Color3.fromRGB(100,255,100))
+	
+	if auraAutoActive then
+		coroutine.wrap(function()
+			while auraAutoActive do
+				auraClicks=auraClicks+auraDmg
+				updateAuraUI()
+				wait(0.5/auraSpeed)
+			end
+		end)()
+	end
+end)
+
+-- CLOSE AURA
+auraCloseBtn.MouseButton1Click:Connect(function()
+	auraPanel.Visible=false
+	newsLabel.Visible=true
+	statusLabel.Visible=true
+end)
 
 -- HAMMER BUTTON
 mainBtn.MouseButton1Click:Connect(function()
