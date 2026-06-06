@@ -63,13 +63,10 @@ local fbt,fpg=at(50)local sbt,spg=at(92)local lbt,lpg=at(134)
 bts[1].BackgroundColor3=Color3.fromRGB(70,70,90)pgs[1].Visible=true
 
 local function ul()
- local L=T[lang]
- fbt.Text=L.farm sbt.Text=L.set lbt.Text=L.news
- hb.Text=ho and L.ho or L.h
- ab.Text=ao and L.ao or L.a
+ local L=T[lang]fbt.Text=L.farm sbt.Text=L.set lbt.Text=L.news
+ hb.Text=ho and L.ho or L.h ab.Text=ao and L.ao or L.a
  hi.Text=(lang=="EN")and"If broken - rejoin"or"Сломалось - перезайди"
- tt.Text=L.th..th[ti].name
- lb.Text=L.lb
+ tt.Text=L.th..th[ti].name lb.Text=L.lb
 end
 
 -- SPAWN
@@ -143,12 +140,10 @@ end)
 local lb=Instance.new("TextButton",spg)lb.Size=UDim2.new(1,0,0,26)lb.Position=UDim2.new(0,0,0,5)lb.BackgroundColor3=C.btn lb.Font=Enum.Font.GothamBold lb.TextSize=11 lb.BorderSizePixel=0 lb.Text=T[lang].lb lb.TextColor3=C.w
 Instance.new("UICorner",lb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",lb).Thickness=1.5 Instance.new("UIStroke",lb).Color=Color3.fromRGB(0,0,0)
 lb.MouseButton1Click:Connect(function()lang=(lang=="EN")and"RU"or"EN"ss(lang,ti,ti2)ul()end)
-
 local tt=Instance.new("TextLabel",spg)tt.Size=UDim2.new(1,0,0,16)tt.Position=UDim2.new(0,0,0,40)tt.BackgroundTransparency=1 tt.Text=T[lang].th..th[ti].name tt.TextColor3=C.w tt.Font=Enum.Font.GothamBold tt.TextSize=11
 local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHANGE"tb.TextColor3=C.w
 Instance.new("UICorner",tb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",tb).Thickness=1.5 Instance.new("UIStroke",tb).Color=Color3.fromRGB(0,0,0)
 tb.MouseButton1Click:Connect(function()ti=ti%#th+1 m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name ss(lang,ti,ti2)end)
-
 local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 0%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl.TextSize=11
 local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSizePixel=0 trBtn.Text="0%"trBtn.TextColor3=C.w
 Instance.new("UICorner",trBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",trBtn).Thickness=1.5 Instance.new("UIStroke",trBtn).Color=Color3.fromRGB(0,0,0)
