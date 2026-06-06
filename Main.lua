@@ -5,13 +5,28 @@ for _,v in pairs(g:GetChildren())do if v.Name=="DH"or v.Name=="MH"then v:Destroy
 local lang="EN"
 local T={EN={farm="FARM",set="SETTINGS",news="NEWS",h="START HAMMER",ho="HAMMER ACTIVE",a="AUTO FARM",ao="AUTO ACTIVE",car="Looking for car...",sit="Sit in a car!",resp="Respawning...",des="Destroyed!",th="Theme: ",lb="EN->RU"},RU={farm="ФАРМ",set="НАСТРОЙКИ",news="НОВОЕ",h="МОЛОТ",ho="МОЛОТ ON",a="АВТО-ФАРМ",ao="АВТО ON",car="Ищу машину...",sit="Сядьте!",resp="Респавн...",des="Убита!",th="Тема: ",lb="RU->EN"}}
 
-local C={btn=Color3.fromRGB(45,45,45),w=Color3.new(1,1,1),gr=Color3.fromRGB(0,255,150),r=Color3.fromRGB(255,55,55),p=Color3.fromRGB(150,90,255)}
+-- Цвета интерфейса (можно выбирать)
+local interfaceColors = {
+    {name="Default", btn=Color3.fromRGB(45,45,45), text=Color3.new(1,1,1)},
+    {name="Red", btn=Color3.fromRGB(80,30,30), text=Color3.fromRGB(255,180,180)},
+    {name="Green", btn=Color3.fromRGB(30,80,30), text=Color3.fromRGB(180,255,180)},
+    {name="Blue", btn=Color3.fromRGB(30,30,80), text=Color3.fromRGB(180,180,255)},
+    {name="Yellow", btn=Color3.fromRGB(80,70,20), text=Color3.fromRGB(255,240,150)},
+    {name="Purple", btn=Color3.fromRGB(60,30,80), text=Color3.fromRGB(210,150,255)},
+    {name="Cyan", btn=Color3.fromRGB(20,70,70), text=Color3.fromRGB(150,255,255)},
+    {name="Orange", btn=Color3.fromRGB(80,45,20), text=Color3.fromRGB(255,200,120)},
+    {name="Pink", btn=Color3.fromRGB(80,30,60), text=Color3.fromRGB(255,150,200)},
+    {name="White", btn=Color3.fromRGB(60,60,60), text=Color3.new(1,1,1)}
+}
+local currentColor=1
+
+local C={btn=interfaceColors[currentColor].btn,w=interfaceColors[currentColor].text,gr=Color3.fromRGB(0,255,150),r=Color3.fromRGB(255,55,55),p=Color3.fromRGB(150,90,255)}
 local th={{n="Standard",m=Color3.fromRGB(20,20,20),s=Color3.fromRGB(28,28,28)},{n="Red",m=Color3.fromRGB(40,10,10),s=Color3.fromRGB(48,15,15)},{n="Orange",m=Color3.fromRGB(40,20,5),s=Color3.fromRGB(48,28,10)},{n="Gold",m=Color3.fromRGB(35,28,5),s=Color3.fromRGB(43,35,10)},{n="Lime",m=Color3.fromRGB(15,35,8),s=Color3.fromRGB(20,43,12)},{n="Green",m=Color3.fromRGB(8,35,12),s=Color3.fromRGB(12,43,18)},{n="Cyan",m=Color3.fromRGB(8,28,40),s=Color3.fromRGB(12,35,48)},{n="Blue",m=Color3.fromRGB(8,12,40),s=Color3.fromRGB(12,18,48)},{n="Violet",m=Color3.fromRGB(25,8,40),s=Color3.fromRGB(33,12,48)},{n="Pink",m=Color3.fromRGB(40,8,25),s=Color3.fromRGB(48,12,32)}}
 local ti=1
-local to={0,0.15,0.25,0.30,0.50,0.75,0.90} -- добавлено 25% (0.25)
-local tn={"0%","15%","25%","30%","50%","75%","90%"}
-local ti2=3 -- 25% (индекс 3)
-local tv=0.25 -- установлена 25% прозрачность
+local to={0,0.15,0.25,0.50,0.75,0.90}
+local tn={"0%","15%","25%","50%","75%","90%"}
+local ti2=3  -- 25% прозрачности по умолчанию
+local tv=to[ti2]  -- 0.25
 
 local sg=Instance.new("ScreenGui",g)sg.Name="DH"
 local mini=Instance.new("Frame",sg)mini.Name="MH"mini.Size=UDim2.new(0,150,0,30)mini.Position=UDim2.new(0.02,0,0.1,0)mini.BackgroundColor3=th[ti].s mini.BackgroundTransparency=tv mini.BorderSizePixel=0 mini.Visible=false mini.Active=true mini.Draggable=true
@@ -35,6 +50,36 @@ local s=Instance.new("Frame",m)s.Size=UDim2.new(0,140,1,-30)s.Position=UDim2.new
 local lb2=Instance.new("TextLabel",s)lb2.Size=UDim2.new(1,0,0,40)lb2.BackgroundTransparency=1 lb2.Text="DAMIR HUB"lb2.TextColor3=C.w lb2.Font=Enum.Font.GothamBold lb2.TextSize=14
 local cn=Instance.new("Frame",m)cn.Size=UDim2.new(1,-140,1,-30)cn.Position=UDim2.new(0,140,0,30)cn.BackgroundTransparency=1
 
+local function updateInterfaceColor()
+    C.btn=interfaceColors[currentColor].btn
+    C.w=interfaceColors[currentColor].text
+    -- Обновляем цвета кнопок
+    hb.BackgroundColor3=C.btn
+    ab.BackgroundColor3=C.btn
+    lb.BackgroundColor3=C.btn
+    tb.BackgroundColor3=C.btn
+    trBtn.BackgroundColor3=C.btn
+    colorBtn.BackgroundColor3=C.btn
+    hb.TextColor3=(ho and C.gr or C.r)
+    ab.TextColor3=(ao and C.gr or C.w)
+    lb.TextColor3=C.w
+    tb.TextColor3=C.w
+    trBtn.TextColor3=C.w
+    colorBtn.TextColor3=C.w
+    rBtn.TextColor3=C.w
+    ht.TextColor3=C.w
+    lb2.TextColor3=C.w
+    cl.TextColor3=C.w
+    sl.TextColor3=C.w
+    hi.TextColor3=C.w
+    tt.TextColor3=C.w
+    tl.TextColor3=C.w
+    lgt.TextColor3=C.w
+    lgc.TextColor3=C.w
+    ft.TextColor3=C.w
+    colorText.Text=T[lang].th..interfaceColors[currentColor].name
+end
+
 local pgs={}
 local bts={}
 local function at(y)
@@ -52,6 +97,7 @@ local function ul()
  hb.Text=ho and L.ho or L.h ab.Text=ao and L.ao or L.a
  hi.Text=(lang=="EN")and"If broken - rejoin"or"Сломалось - перезайди"
  tt.Text=L.th..th[ti].name lb.Text=L.lb
+ colorText.Text=L.th..interfaceColors[currentColor].name
 end
 
 -- SPAWN
@@ -124,14 +170,25 @@ end)
 local lb=Instance.new("TextButton",spg)lb.Size=UDim2.new(1,0,0,26)lb.Position=UDim2.new(0,0,0,5)lb.BackgroundColor3=C.btn lb.Font=Enum.Font.GothamBold lb.TextSize=11 lb.BorderSizePixel=0 lb.Text=T[lang].lb lb.TextColor3=C.w
 Instance.new("UICorner",lb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",lb).Thickness=1.5 Instance.new("UIStroke",lb).Color=Color3.fromRGB(0,0,0)
 lb.MouseButton1Click:Connect(function()lang=(lang=="EN")and"RU"or"EN"ul()end)
+
 local tt=Instance.new("TextLabel",spg)tt.Size=UDim2.new(1,0,0,16)tt.Position=UDim2.new(0,0,0,40)tt.BackgroundTransparency=1 tt.Text=T[lang].th..th[ti].name tt.TextColor3=C.w tt.Font=Enum.Font.GothamBold tt.TextSize=11
-local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHANGE"tb.TextColor3=C.w
+local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHANGE THEME"tb.TextColor3=C.w
 Instance.new("UICorner",tb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",tb).Thickness=1.5 Instance.new("UIStroke",tb).Color=Color3.fromRGB(0,0,0)
 tb.MouseButton1Click:Connect(function()ti=ti%#th+1 m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name end)
+
 local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 25%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl.TextSize=11
 local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSizePixel=0 trBtn.Text="25%"trBtn.TextColor3=C.w
 Instance.new("UICorner",trBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",trBtn).Thickness=1.5 Instance.new("UIStroke",trBtn).Color=Color3.fromRGB(0,0,0)
 trBtn.MouseButton1Click:Connect(function()ti2=ti2%#to+1 tv=to[ti2]m.BackgroundTransparency=tv s.BackgroundTransparency=tv hdr.BackgroundTransparency=tv mini.BackgroundTransparency=tv trBtn.Text=tn[ti2]tl.Text="Transparency: "..tn[ti2]end)
+
+-- ВЫБОР ЦВЕТА ИНТЕРФЕЙСА
+local colorText=Instance.new("TextLabel",spg)colorText.Size=UDim2.new(1,0,0,16)colorText.Position=UDim2.new(0,0,0,150)colorText.BackgroundTransparency=1 colorText.Text=T[lang].th..interfaceColors[currentColor].name colorText.TextColor3=C.w colorText.Font=Enum.Font.GothamBold colorText.TextSize=11
+local colorBtn=Instance.new("TextButton",spg)colorBtn.Size=UDim2.new(1,0,0,26)colorBtn.Position=UDim2.new(0,0,0,168)colorBtn.BackgroundColor3=C.btn colorBtn.Font=Enum.Font.GothamBold colorBtn.TextSize=11 colorBtn.BorderSizePixel=0 colorBtn.Text="CHANGE COLOR"colorBtn.TextColor3=C.w
+Instance.new("UICorner",colorBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",colorBtn).Thickness=1.5 Instance.new("UIStroke",colorBtn).Color=Color3.fromRGB(0,0,0)
+colorBtn.MouseButton1Click:Connect(function()
+    currentColor=currentColor%#interfaceColors+1
+    updateInterfaceColor()
+end)
 
 -- NEWS
 local lgt=Instance.new("TextLabel",lpg)lgt.Size=UDim2.new(1,0,0,18)lgt.BackgroundTransparency=1 lgt.Text="WHATS NEW"lgt.TextColor3=C.w lgt.Font=Enum.Font.GothamBold lgt.TextSize=12
@@ -140,11 +197,13 @@ lgc.Text=[[v9.6 - Light:
 + Removed auto car name
 + Removed settings save
 + EN/RU language
-+ Transparency 0-90%
-+ 10 themes
++ Transparency 0-90% (25% default)
++ 10 background themes
++ 10 interface colors
 + Minimize & close
 + Molot 200/-1500
 + Auto farm + respawn]]
 
 ul()
-game.StarterGui:SetCore("SendNotification",{Title="DAMIR HUB",Text="v9.6 loaded!",Duration=3})
+updateInterfaceColor()
+game.StarterGui:SetCore("SendNotification",{Title="DAMIR HUB",Text="v9.6 loaded! | 25% transparency",Duration=3})
