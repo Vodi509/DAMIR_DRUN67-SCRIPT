@@ -13,6 +13,43 @@ local tn={"0%","15%","30%","50%","60%","75%","90%"}
 local ti2=3
 local tv=to[ti2]
 
+-- СОХРАНЕНИЕ НАСТРОЕК
+local settings = {
+	lang = "EN",
+	theme = 1,
+	transparency = 3
+}
+
+local function loadSettings()
+	if writefile and readfile then
+		pcall(function()
+			local success, data = pcall(function()
+				return game:GetService("HttpService"):JSONDecode(readfile("DamirHub_Settings.json"))
+			end)
+			if success and data then
+				settings.lang = data.lang or "EN"
+				settings.theme = data.theme or 1
+				settings.transparency = data.transparency or 3
+				lang = settings.lang
+				ti = settings.theme
+				ti2 = settings.transparency
+				tv = to[ti2]
+			end
+		end)
+	end
+end
+
+local function saveSettings()
+	if writefile then
+		pcall(function()
+			local data = game:GetService("HttpService"):JSONEncode(settings)
+			writefile("DamirHub_Settings.json", data)
+		end)
+	end
+end
+
+loadSettings()
+
 local sg=Instance.new("ScreenGui",g)sg.Name="DH"
 local mini=Instance.new("Frame",sg)mini.Name="MH"mini.Size=UDim2.new(0,150,0,30)mini.Position=UDim2.new(0.02,0,0.1,0)mini.BackgroundColor3=th[ti].s mini.BackgroundTransparency=tv mini.BorderSizePixel=[...]
 Instance.new("UICorner",mini).CornerRadius=UDim.new(0,6)
@@ -103,15 +140,15 @@ end)
 -- SETTINGS
 local lb=Instance.new("TextButton",spg)lb.Size=UDim2.new(1,0,0,26)lb.Position=UDim2.new(0,0,0,5)lb.BackgroundColor3=C.btn lb.Font=Enum.Font.GothamBold lb.TextSize=11 lb.BorderSizePixel=0 lb.Text=T[lan[...]
 Instance.new("UICorner",lb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",lb).Thickness=1.5 Instance.new("UIStroke",lb).Color=Color3.fromRGB(0,0,0)
-lb.MouseButton1Click:Connect(function()lang=(lang=="EN")and"RU"or"EN"ul()end)
+lb.MouseButton1Click:Connect(function()lang=(lang=="EN")and"RU"or"EN"settings.lang=lang saveSettings()ul()end)
 local tt=Instance.new("TextLabel",spg)tt.Size=UDim2.new(1,0,0,16)tt.Position=UDim2.new(0,0,0,40)tt.BackgroundTransparency=1 tt.Text=T[lang].th..th[ti].name tt.TextColor3=C.w tt.Font=Enum.Font.GothamBo[...]
 local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHA[...]
 Instance.new("UICorner",tb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",tb).Thickness=1.5 Instance.new("UIStroke",tb).Color=Color3.fromRGB(0,0,0)
-tb.MouseButton1Click:Connect(function()ti=ti%#th+1 m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name [...]
+tb.MouseButton1Click:Connect(function()ti=ti%#th+1 settings.theme=ti m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name saveSettings()[...]
 local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 25%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl[...]
 local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSi[...]
 Instance.new("UICorner",trBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",trBtn).Thickness=1.5 Instance.new("UIStroke",trBtn).Color=Color3.fromRGB(0,0,0)
-trBtn.MouseButton1Click:Connect(function()ti2=ti2%#to+1 tv=to[ti2]m.BackgroundTransparency=tv s.BackgroundTransparency=tv hdr.BackgroundTransparency=tv mini.BackgroundTransparency=tv trBtn.Text=tn[ti2[...]
+trBtn.MouseButton1Click:Connect(function()ti2=ti2%#to+1 tv=to[ti2]settings.transparency=ti2 m.BackgroundTransparency=tv s.BackgroundTransparency=tv hdr.BackgroundTransparency=tv mini.BackgroundTransparency=tv trBtn.Text=tn[ti2]saveSettings()[...]
 
 -- NEWS
 local lgt=Instance.new("TextLabel",lpg)lgt.Size=UDim2.new(1,0,0,18)lgt.BackgroundTransparency=1 lgt.Text="WHATS NEW"lgt.TextColor3=C.w lgt.Font=Enum.Font.GothamBold lgt.TextSize=12
@@ -122,7 +159,8 @@ lgc.Text=[[v9.8 - Fixed:
 + 10 themes
 + Minimize & close
 + Molot 200/-1500
-+ Auto farm + respawn]]
++ Auto farm + respawn
++ Settings are saved!]]
 
 local function ul()
  local L=T[lang]
