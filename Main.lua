@@ -5,12 +5,12 @@ for _,v in pairs(g:GetChildren())do if v.Name=="DH"or v.Name=="MH"then v:Destroy
 local lang="EN"
 local T={EN={farm="FARM",set="SETTINGS",news="NEWS",h="START HAMMER",ho="HAMMER ACTIVE",a="AUTO FARM",ao="AUTO ACTIVE",car="Looking for car...",sit="Sit in a car!",resp="Respawning...",des="Destroyed!",th="Theme: ",lb="EN->RU"},RU={farm="ФАРМ",set="НАСТРОЙКИ",news="НОВОЕ",h="МОЛОТ",ho="МОЛОТ ON",a="АВТО-ФАРМ",ao="АВТО ON",car="Ищу машину...",sit="Сядьте!",resp="Респавн...",des="Убита!",th="Тема: ",lb="RU->EN"}}
 
-local C={btn=Color3.fromRGB(45,45,45),w=Color3.new(1,1,1),gr=Color3.fromRGB(0,255,150),r=Color3.fromRGB(255,55,55),p=Color3.fromRGB(150,90,255)}
+local C={btn=Color3.fromRGB(45,45,45),w=Color3.new(1,1,1),gr=Color3.fromRGB(0,255,150),r=Color3.fromRGB(255,55,55),p=Color3.fromRGB(150,90,255),gold=Color3.fromRGB(255,215,0)}
 local th={{n="Standard",m=Color3.fromRGB(20,20,20),s=Color3.fromRGB(28,28,28)},{n="Red",m=Color3.fromRGB(40,10,10),s=Color3.fromRGB(48,15,15)},{n="Orange",m=Color3.fromRGB(40,20,5),s=Color3.fromRGB(48,28,10)},{n="Gold",m=Color3.fromRGB(35,28,5),s=Color3.fromRGB(43,35,10)},{n="Lime",m=Color3.fromRGB(15,35,8),s=Color3.fromRGB(20,43,12)},{n="Green",m=Color3.fromRGB(8,35,12),s=Color3.fromRGB(12,43,18)},{n="Cyan",m=Color3.fromRGB(8,28,40),s=Color3.fromRGB(12,35,48)},{n="Blue",m=Color3.fromRGB(8,12,40),s=Color3.fromRGB(12,18,48)},{n="Violet",m=Color3.fromRGB(25,8,40),s=Color3.fromRGB(33,12,48)},{n="Pink",m=Color3.fromRGB(40,8,25),s=Color3.fromRGB(48,12,32)}}
 local ti=1
-local to={0,0.15,0.25,0.30,0.50,0.60,0.75,0.90}
-local tn={"0%","15%","25%","30%","50%","60%","75%","90%"}
-local ti2=3
+local to={0,0.15,0.30,0.50,0.60,0.75,0.90}
+local tn={"0%","15%","30%","50%","60%","75%","90%"}
+local ti2=5
 local tv=to[ti2]
 
 local sg=Instance.new("ScreenGui",g)sg.Name="DH"
@@ -32,7 +32,22 @@ rBtn.MouseButton1Click:Connect(function()m.Visible=true mini.Visible=false end)
 clB.MouseButton1Click:Connect(function()sg:Destroy()end)
 
 local s=Instance.new("Frame",m)s.Size=UDim2.new(0,140,1,-30)s.Position=UDim2.new(0,0,0,30)s.BackgroundColor3=th[ti].s s.BackgroundTransparency=tv s.BorderSizePixel=0
-local logo=Instance.new("TextLabel",s)logo.Size=UDim2.new(1,0,0,40)logo.BackgroundTransparency=1 logo.Text="DAMIR HUB"logo.TextColor3=C.w logo.Font=Enum.Font.GothamBold logo.TextSize=14
+
+local logoBtn=Instance.new("TextButton",s)logoBtn.Size=UDim2.new(1,0,0,40)logoBtn.BackgroundTransparency=1 logoBtn.Text="DAMIR HUB"logoBtn.TextColor3=C.w logoBtn.Font=Enum.Font.GothamBold logoBtn.TextSize=14
+local secretClicks=0
+local secretTimer=0
+local secretPage=nil
+local secretBtn=nil
+
+logoBtn.MouseButton1Click:Connect(function()
+    secretClicks=secretClicks+1
+    if secretClicks==1 then secretTimer=tick()
+    elseif secretClicks>=3 and tick()-secretTimer<2 then
+        if secretBtn then secretBtn.Visible=not secretBtn.Visible end
+        secretClicks=0
+    elseif tick()-secretTimer>2 then secretClicks=1 secretTimer=tick()
+    end
+end)
 
 local cn=Instance.new("Frame",m)cn.Size=UDim2.new(1,-140,1,-30)cn.Position=UDim2.new(0,140,0,30)cn.BackgroundTransparency=1
 
@@ -47,6 +62,38 @@ local function at(y)
 end
 local fbt,fpg=at(50)local sbt,spg=at(92)local lbt,lpg=at(134)
 bts[1].BackgroundColor3=Color3.fromRGB(70,70,90)pgs[1].Visible=true
+
+-- секретная вкладка
+secretBtn=Instance.new("TextButton",s)secretBtn.Size=UDim2.new(1,-20,0,36)secretBtn.Position=UDim2.new(0,10,0,176)secretBtn.BackgroundColor3=Color3.fromRGB(40,40,40)secretBtn.Font=Enum.Font.GothamBold secretBtn.TextSize=12 secretBtn.BorderSizePixel=0 secretBtn.Text="???"secretBtn.TextColor3=C.gold secretBtn.Visible=false
+Instance.new("UICorner",secretBtn).CornerRadius=UDim.new(0,5)
+secretPage=Instance.new("Frame",cn)secretPage.Size=UDim2.new(1,-20,1,-20)secretPage.Position=UDim2.new(0,10,0,10)secretPage.BackgroundTransparency=1 secretPage.Visible=false
+secretBtn.MouseButton1Click:Connect(function()for _,b in pairs(bts)do b.BackgroundColor3=Color3.fromRGB(40,40,40)end for _,p in pairs(pgs)do p.Visible=false end secretBtn.BackgroundColor3=C.gold secretPage.Visible=true end)
+table.insert(bts,secretBtn)table.insert(pgs,secretPage)
+
+local secTitle=Instance.new("TextLabel",secretPage)secTitle.Size=UDim2.new(1,0,0,24)secTitle.BackgroundTransparency=1 secTitle.Text="💎 DAMIR'S SECRET"secTitle.TextColor3=C.gold secTitle.Font=Enum.Font.GothamBold secTitle.TextSize=14
+local secText=Instance.new("TextLabel",secretPage)secText.Size=UDim2.new(1,0,0,200)secText.Position=UDim2.new(0,0,0,30)secText.BackgroundColor3=Color3.fromRGB(35,35,35)secText.TextColor3=C.w secText.Font=Enum.Font.Gotham secText.TextSize=10 secText.TextXAlignment=Enum.TextXAlignment.Left secText.TextYAlignment=Enum.TextYAlignment.Top
+Instance.new("UICorner",secText).CornerRadius=UDim.new(0,5)
+secText.Text=[[You found the secret button! 🎉
+
+This script was made with love and pain by Damir.
+Remember: nothing is impossible if you have desire and perseverance.
+
+Good luck with your crush farming! 💪
+
+     /\_/\
+    ( o.o )
+     > ^ <
+    Meow! 🐱
+
+Secret clicks: 0]]
+
+local secretClickCount=0
+local secCountLabel=Instance.new("TextLabel",secretPage)secCountLabel.Size=UDim2.new(1,0,0,20)secCountLabel.Position=UDim2.new(0,0,0,240)secCountLabel.BackgroundTransparency=1 secCountLabel.Text="Secret clicks: 0"secCountLabel.TextColor3=C.gold secCountLabel.Font=Enum.Font.GothamBold secCountLabel.TextSize=11
+
+secretBtn.MouseButton1Click:Connect(function()
+    secretClickCount=secretClickCount+1
+    secCountLabel.Text="Secret clicks: "..secretClickCount
+end)
 
 local function ul()
  local L=T[lang]
@@ -130,21 +177,22 @@ local tt=Instance.new("TextLabel",spg)tt.Size=UDim2.new(1,0,0,16)tt.Position=UDi
 local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHANGE"tb.TextColor3=C.w
 Instance.new("UICorner",tb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",tb).Thickness=1.5 Instance.new("UIStroke",tb).Color=Color3.fromRGB(0,0,0)
 tb.MouseButton1Click:Connect(function()ti=ti%#th+1 m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name end)
-local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 25%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl.TextSize=11
-local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSizePixel=0 trBtn.Text="25%"trBtn.TextColor3=C.w
+local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 60%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl.TextSize=11
+local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSizePixel=0 trBtn.Text="60%"trBtn.TextColor3=C.w
 Instance.new("UICorner",trBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",trBtn).Thickness=1.5 Instance.new("UIStroke",trBtn).Color=Color3.fromRGB(0,0,0)
 trBtn.MouseButton1Click:Connect(function()ti2=ti2%#to+1 tv=to[ti2]m.BackgroundTransparency=tv s.BackgroundTransparency=tv hdr.BackgroundTransparency=tv mini.BackgroundTransparency=tv trBtn.Text=tn[ti2]tl.Text="Transparency: "..tn[ti2]end)
 
 -- NEWS
 local lgt=Instance.new("TextLabel",lpg)lgt.Size=UDim2.new(1,0,0,18)lgt.BackgroundTransparency=1 lgt.Text="WHATS NEW"lgt.TextColor3=C.w lgt.Font=Enum.Font.GothamBold lgt.TextSize=12
 local lgc=Instance.new("TextLabel",lpg)lgc.Size=UDim2.new(1,0,0,220)lgc.Position=UDim2.new(0,0,0,22)lgc.BackgroundColor3=Color3.fromRGB(35,35,35)lgc.TextColor3=C.w lgc.Font=Enum.Font.Gotham lgc.TextSize=10 lgc.TextXAlignment=Enum.TextXAlignment.Left lgc.TextYAlignment=Enum.TextYAlignment.Top Instance.new("UICorner",lgc).CornerRadius=UDim.new(0,5)
-lgc.Text=[[v9.8 - Stable:
-+ 25% default transparency
+lgc.Text=[[v9.8 - Fixed:
 + Language switch works
++ 60% transparency default
++ Secret button (tap logo 3x)
 + 10 themes
 + Minimize & close
 + Molot 200/-1500
 + Auto farm + respawn]]
 
 ul()
-game.StarterGui:SetCore("SendNotification",{Title="DAMIR HUB",Text="v9.8 loaded!",Duration=3})
+game.StarterGui:SetCore("SendNotification",{Title="DAMIR HUB",Text="v9.8 loaded! Tap logo 3x",Duration=5})
