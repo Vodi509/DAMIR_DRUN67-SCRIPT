@@ -1,543 +1,151 @@
--- DAMIR HUB v12 DELTA - ОПТИМИЗИРОВАННАЯ ВЕРСИЯ
--- Исправлено для работы в Delta exploit
+local p=game.Players.LocalPlayer
+local g=p:WaitForChild("PlayerGui")
+for _,v in pairs(g:GetChildren())do if v.Name=="DH"or v.Name=="MH"then v:Destroy()end end
 
--- ✅ ИНИЦИАЛИЗАЦИЯ БЕЗОПАСНАЯ
-local success, p = pcall(function() return game.Players.LocalPlayer end)
-if not success or not p then
-    game.StarterGui:SetCore("SendNotification", {Title="❌ ОШИБКА", Text="Скрипт должен быть загружен в Delta!", Duration=3})
-    return
+local lang="EN"
+local T={EN={farm="FARM",set="SETTINGS",news="NEWS",h="START HAMMER",ho="HAMMER ACTIVE",a="AUTO FARM",ao="AUTO ACTIVE",car="Looking for car...",sit="Sit in a car!",resp="Respawning...",des="Destroyed![...]
+
+local C={btn=Color3.fromRGB(45,45,45),w=Color3.new(1,1,1),gr=Color3.fromRGB(0,255,150),r=Color3.fromRGB(255,55,55),p=Color3.fromRGB(150,90,255),gold=Color3.fromRGB(255,215,0)}
+local th={{n="Standard",m=Color3.fromRGB(20,20,20),s=Color3.fromRGB(28,28,28)},{n="Red",m=Color3.fromRGB(40,10,10),s=Color3.fromRGB(48,15,15)},{n="Orange",m=Color3.fromRGB(40,20,5),s=Color3.fromRGB(48[...]
+local ti=1
+local to={0,0.15,0.30,0.50,0.60,0.75,0.90}
+local tn={"0%","15%","30%","50%","60%","75%","90%"}
+local ti2=3
+local tv=to[ti2]
+
+local sg=Instance.new("ScreenGui",g)sg.Name="DH"
+local mini=Instance.new("Frame",sg)mini.Name="MH"mini.Size=UDim2.new(0,150,0,30)mini.Position=UDim2.new(0.02,0,0.1,0)mini.BackgroundColor3=th[ti].s mini.BackgroundTransparency=tv mini.BorderSizePixel=[...]
+Instance.new("UICorner",mini).CornerRadius=UDim.new(0,6)
+local rBtn=Instance.new("TextButton",mini)rBtn.Size=UDim2.new(1,0,1,0)rBtn.BackgroundTransparency=1 rBtn.Text="DAMIR HUB"rBtn.TextColor3=C.w rBtn.Font=Enum.Font.GothamBold rBtn.TextSize=12
+
+local m=Instance.new("Frame",sg)m.Size=UDim2.new(0,500,0,310)m.Position=UDim2.new(0.5,-250,0.5,-155)m.BackgroundColor3=th[ti].m m.BackgroundTransparency=tv m.BorderSizePixel=0 m.Active=true m.Draggabl[...]
+Instance.new("UICorner",m).CornerRadius=UDim.new(0,8)
+local hdr=Instance.new("Frame",m)hdr.Size=UDim2.new(1,0,0,30)hdr.BackgroundColor3=th[ti].s hdr.BackgroundTransparency=tv hdr.BorderSizePixel=0
+Instance.new("UICorner",hdr).CornerRadius=UDim.new(0,8)
+local ht=Instance.new("TextLabel",hdr)ht.Size=UDim2.new(1,-60,1,0)ht.Position=UDim2.new(0,12,0,0)ht.BackgroundTransparency=1 ht.Text="DAMIR HUB v9.8"ht.TextColor3=C.w ht.Font=Enum.Font.GothamBold ht.T[...]
+local minB=Instance.new("TextButton",hdr)minB.Size=UDim2.new(0,22,0,22)minB.Position=UDim2.new(1,-50,0,4)minB.BackgroundColor3=C.p minB.Text="—"minB.TextColor3=C.w minB.Font=Enum.Font.GothamBold min[...]
+Instance.new("UICorner",minB).CornerRadius=UDim.new(0,11)
+local clB=Instance.new("TextButton",hdr)clB.Size=UDim2.new(0,22,0,22)clB.Position=UDim2.new(1,-25,0,4)clB.BackgroundColor3=C.r clB.Text="✕"clB.TextColor3=C.w clB.Font=Enum.Font.GothamBold clB.TextSi[...]
+Instance.new("UICorner",clB).CornerRadius=UDim.new(0,11)
+minB.MouseButton1Click:Connect(function()m.Visible=false mini.Visible=true end)
+rBtn.MouseButton1Click:Connect(function()m.Visible=true mini.Visible=false end)
+clB.MouseButton1Click:Connect(function()sg:Destroy()end)
+
+local s=Instance.new("Frame",m)s.Size=UDim2.new(0,140,1,-30)s.Position=UDim2.new(0,0,0,30)s.BackgroundColor3=th[ti].s s.BackgroundTransparency=tv s.BorderSizePixel=0
+
+local logoBtn=Instance.new("TextButton",s)logoBtn.Size=UDim2.new(1,0,0,40)logoBtn.BackgroundTransparency=1 logoBtn.Text="DAMIR HUB"logoBtn.TextColor3=C.w logoBtn.Font=Enum.Font.GothamBold logoBtn.Text[...]
+
+local cn=Instance.new("Frame",m)cn.Size=UDim2.new(1,-140,1,-30)cn.Position=UDim2.new(0,140,0,30)cn.BackgroundTransparency=1
+
+local pgs={}
+local bts={}
+local function at(y)
+ local bt=Instance.new("TextButton",s)bt.Size=UDim2.new(1,-20,0,36)bt.Position=UDim2.new(0,10,0,y)bt.BackgroundColor3=Color3.fromRGB(40,40,40)bt.Font=Enum.Font.GothamBold bt.TextSize=12 bt.BorderSizeP[...]
+ Instance.new("UICorner",bt).CornerRadius=UDim.new(0,5)
+ local pg=Instance.new("Frame",cn)pg.Size=UDim2.new(1,-20,1,-20)pg.Position=UDim2.new(0,10,0,10)pg.BackgroundTransparency=1 pg.Visible=false
+ bt.MouseButton1Click:Connect(function()for _,b in pairs(bts)do b.BackgroundColor3=Color3.fromRGB(40,40,40)end for _,p in pairs(pgs)do p.Visible=false end bt.BackgroundColor3=Color3.fromRGB(70,70,90)p[...]
+ table.insert(bts,bt)table.insert(pgs,pg)return bt,pg
 end
+local fbt,fpg=at(50)local sbt,spg=at(92)local lbt,lpg=at(134)
+bts[1].BackgroundColor3=Color3.fromRGB(70,70,90)pgs[1].Visible=true
 
-local g = p:WaitForChild("PlayerGui", 10)
-if not g then
-    game.StarterGui:SetCore("SendNotification", {Title="❌ ОШИБКА", Text="PlayerGui не найден!", Duration=3})
-    return
-end
+local ft=Instance.new("TextLabel",fpg)ft.Size=UDim2.new(1,0,0,18)ft.BackgroundTransparency=1 ft.Text="MOLOT v9.8"ft.TextColor3=C.w ft.Font=Enum.Font.GothamBold ft.TextSize=12
+local cb=Instance.new("Frame",fpg)cb.Size=UDim2.new(1,0,0,30)cb.Position=UDim2.new(0,0,0,22)cb.BackgroundColor3=Color3.fromRGB(35,35,35)Instance.new("UICorner",cb).CornerRadius=UDim.new(0,4)
+local cl=Instance.new("TextLabel",cb)cl.Size=UDim2.new(1,-14,1,0)cl.Position=UDim2.new(0,7,0,0)cl.BackgroundTransparency=1 cl.Text=T[lang].car cl.TextColor3=C.w cl.Font=Enum.Font.GothamBold cl.TextSiz[...]
+local sl=Instance.new("TextLabel",fpg)sl.Size=UDim2.new(1,0,0,16)sl.Position=UDim2.new(0,0,0,56)sl.BackgroundTransparency=1 sl.Text="Hits: 0 | Broken: 0 | Auto: 0"sl.TextColor3=C.w sl.Font=Enum.Font.G[...]
 
--- ОЧИСТКА СТАРОГО GUI
-for _, v in pairs(g:GetChildren()) do
-    if v.Name == "DH" or v.Name == "MH" then 
-        pcall(function() v:Destroy() end)
-    end 
-end
-
--- ЯЗЫК И НАСТРОЙКИ
-local lang = "EN"
-local T = {
-    EN = {farm = "FARM", car = "Looking for car...", resp = "Respawning...", des = "Destroyed!"},
-    RU = {farm = "ФЕРМА", car = "Поиск машины...", resp = "Возрождение...", des = "Уничтожено!"}
-}
-
--- ТЕМЫ С ОПТИМИЗАЦИЕЙ
-local themes = {
-    {n="🔵 Blue", primary=Color3.fromRGB(10,20,50), secondary=Color3.fromRGB(15,30,60), accent=Color3.fromRGB(0,150,255)},
-    {n="💜 Purple", primary=Color3.fromRGB(40,10,60), secondary=Color3.fromRGB(50,15,70), accent=Color3.fromRGB(200,50,255)},
-    {n="💚 Green", primary=Color3.fromRGB(10,50,20), secondary=Color3.fromRGB(15,60,25), accent=Color3.fromRGB(0,255,100)},
-    {n="❤️ Red", primary=Color3.fromRGB(60,10,10), secondary=Color3.fromRGB(70,15,15), accent=Color3.fromRGB(255,0,80)},
-    {n="🌊 Cyan", primary=Color3.fromRGB(10,50,50), secondary=Color3.fromRGB(15,60,60), accent=Color3.fromRGB(0,255,255)},
-    {n="🟡 Yellow", primary=Color3.fromRGB(60,50,0), secondary=Color3.fromRGB(70,60,0), accent=Color3.fromRGB(255,255,0)},
-    {n="🟠 Orange", primary=Color3.fromRGB(60,30,0), secondary=Color3.fromRGB(70,40,0), accent=Color3.fromRGB(255,150,0)},
-    {n="🔴 Pink", primary=Color3.fromRGB(50,10,40), secondary=Color3.fromRGB(60,15,50), accent=Color3.fromRGB(255,50,150)}
-}
-
-local ti = 1
-local to = {0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30}
-local tn = {"0%", "5%", "10%", "15%", "20%", "25%", "30%"}
-local ti2 = 3
-local tv = to[ti2]
-
--- ✅ БЕЗОПАСНАЯ ЗАГРУЗКА НАСТРОЕК (БЕЗ FILE SYSTEM)
-local settings = {lang = "EN", theme = 1, transparency = 3, auraClicks = 0, auraLevel = 1, auraDmg = 1, auraSpeed = 1}
-
--- ИСПОЛЬЗУЕМ MEMORY ВМЕСТО FILES ДЛЯ DELTA
-_G.DamirSettings = _G.DamirSettings or settings
-
-local function loadSettings()
-    settings = _G.DamirSettings or settings
-    lang = settings.lang or "EN"
-    ti = settings.theme or 1
-    ti2 = settings.transparency or 3
-    tv = to[ti2]
-end
-
-local function saveSettings()
-    _G.DamirSettings = settings
-    -- Попытка сохранить в файл (если Delta позволяет)
-    if _G.writefile then
-        pcall(function()
-            _G.writefile("DamirHub_Delta.json", game:GetService("HttpService"):JSONEncode(settings))
-        end)
-    end
-end
-
-loadSettings()
-
--- ✅ СОЗДАНИЕ GUI (ОПТИМИЗИРОВАНО ДЛЯ DELTA)
-local sg = Instance.new("ScreenGui", g)
-sg.Name = "DH"
-sg.ResetOnSpawn = false
-sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
--- ВЕРХНЯЯ ПАНЕЛЬ
-local topBar = Instance.new("Frame", sg)
-topBar.Size = UDim2.new(1, 0, 0, 40)
-topBar.Position = UDim2.new(0, 0, 0, 0)
-topBar.BackgroundColor3 = themes[ti].primary
-topBar.BackgroundTransparency = tv
-topBar.BorderSizePixel = 0
-topBar.Name = "TopBar"
-
-local title = Instance.new("TextLabel", topBar)
-title.Size = UDim2.new(0.5, 0, 1, 0)
-title.BackgroundTransparency = 1
-title.TextColor3 = themes[ti].accent
-title.Font = Enum.Font.GothamBold
-title.TextSize = 11
-title.Text = "💎 DAMIR v12 DELTA"
-title.TextXAlignment = Enum.TextXAlignment.Left
-title.Position = UDim2.new(0, 8, 0, 0)
-
--- СЕКРЕТНАЯ КНОПКА AURA (МИКРОСКОПИЧЕСКИЙ РАЗМЕР)
-local secretBtn = Instance.new("TextButton", topBar)
-secretBtn.Size = UDim2.new(0, 2, 1, 0)
-secretBtn.Position = UDim2.new(1, -2, 0, 0)
-secretBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-secretBtn.BackgroundTransparency = 1
-secretBtn.Text = ""
-secretBtn.BorderSizePixel = 0
-
--- КНОПКИ СВЕРХУ
-local themeBtn = Instance.new("TextButton", topBar)
-themeBtn.Size = UDim2.new(0, 38, 1, 0)
-themeBtn.Position = UDim2.new(1, -95, 0, 0)
-themeBtn.BackgroundColor3 = themes[ti].accent
-themeBtn.BackgroundTransparency = tv
-themeBtn.TextColor3 = themes[ti].primary
-themeBtn.Font = Enum.Font.GothamBold
-themeBtn.TextSize = 11
-themeBtn.Text = "🎨"
-themeBtn.BorderSizePixel = 0
-
-local opacityBtn = Instance.new("TextButton", topBar)
-opacityBtn.Size = UDim2.new(0, 38, 1, 0)
-opacityBtn.Position = UDim2.new(1, -52, 0, 0)
-opacityBtn.BackgroundColor3 = themes[ti].accent
-opacityBtn.BackgroundTransparency = tv
-opacityBtn.TextColor3 = themes[ti].primary
-opacityBtn.Font = Enum.Font.GothamBold
-opacityBtn.TextSize = 11
-opacityBtn.Text = "🔦"
-opacityBtn.BorderSizePixel = 0
-
--- ОСНОВНЫЕ КНОПКИ
-local mainBtn = Instance.new("TextButton", sg)
-mainBtn.Size = UDim2.new(0, 90, 0, 45)
-mainBtn.Position = UDim2.new(0, 8, 0, 45)
-mainBtn.BackgroundColor3 = themes[ti].accent
-mainBtn.BackgroundTransparency = tv
-mainBtn.TextColor3 = themes[ti].primary
-mainBtn.Font = Enum.Font.GothamBold
-mainBtn.TextSize = 11
-mainBtn.Text = "FARM"
-mainBtn.BorderSizePixel = 0
-
-local autoBtn = Instance.new("TextButton", sg)
-autoBtn.Size = UDim2.new(0, 90, 0, 45)
-autoBtn.Position = UDim2.new(0, 103, 0, 45)
-autoBtn.BackgroundColor3 = themes[ti].accent
-autoBtn.BackgroundTransparency = tv
-autoBtn.TextColor3 = themes[ti].primary
-autoBtn.Font = Enum.Font.GothamBold
-autoBtn.TextSize = 11
-autoBtn.Text = "AUTO"
-autoBtn.BorderSizePixel = 0
-
-local langBtn = Instance.new("TextButton", sg)
-langBtn.Size = UDim2.new(0, 45, 0, 45)
-langBtn.Position = UDim2.new(1, -100, 0, 45)
-langBtn.BackgroundColor3 = themes[ti].accent
-langBtn.BackgroundTransparency = tv
-langBtn.TextColor3 = themes[ti].primary
-langBtn.Font = Enum.Font.GothamBold
-langBtn.TextSize = 11
-langBtn.Text = "🌐"
-langBtn.BorderSizePixel = 0
-
-local closeBtn = Instance.new("TextButton", sg)
-closeBtn.Size = UDim2.new(0, 45, 0, 45)
-closeBtn.Position = UDim2.new(1, -50, 0, 45)
-closeBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-closeBtn.BackgroundTransparency = tv
-closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeBtn.Font = Enum.Font.GothamBold
-closeBtn.TextSize = 12
-closeBtn.Text = "✕"
-closeBtn.BorderSizePixel = 0
-
--- СТАТУС ПАНЕЛЬ
-local statusLabel = Instance.new("TextLabel", sg)
-statusLabel.Size = UDim2.new(1, -16, 0, 100)
-statusLabel.Position = UDim2.new(0, 8, 0, 95)
-statusLabel.BackgroundColor3 = themes[ti].secondary
-statusLabel.BackgroundTransparency = tv
-statusLabel.TextColor3 = themes[ti].accent
-statusLabel.Font = Enum.Font.Gotham
-statusLabel.TextSize = 9
-statusLabel.TextWrapped = true
-statusLabel.Text = "Status: ✅ Ready\nHits: 0 | Broken: 0"
-statusLabel.TextXAlignment = Enum.TextXAlignment.Left
-statusLabel.TextYAlignment = Enum.TextYAlignment.Top
-statusLabel.BorderSizePixel = 0
-
--- ✅ СКРЫТАЯ AURA ПАНЕЛЬ
-local auraPanel = Instance.new("Frame", sg)
-auraPanel.Size = UDim2.new(1, -16, 0, 320)
-auraPanel.Position = UDim2.new(0, 8, 0, 95)
-auraPanel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-auraPanel.BackgroundTransparency = 0.1
-auraPanel.BorderSizePixel = 0
-auraPanel.Visible = false
-
-local auraTitle = Instance.new("TextLabel", auraPanel)
-auraTitle.Size = UDim2.new(1, 0, 0, 20)
-auraTitle.BackgroundTransparency = 1
-auraTitle.TextColor3 = Color3.fromRGB(255, 255, 0)
-auraTitle.Font = Enum.Font.GothamBold
-auraTitle.TextSize = 12
-auraTitle.Text = "✨ AURA CLICKER ✨"
-
-local auraClickBtn = Instance.new("TextButton", auraPanel)
-auraClickBtn.Size = UDim2.new(1, 0, 0, 55)
-auraClickBtn.Position = UDim2.new(0, 0, 0, 25)
-auraClickBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-auraClickBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-auraClickBtn.Font = Enum.Font.GothamBold
-auraClickBtn.TextSize = 14
-auraClickBtn.Text = "⭐ CLICK ⭐\n+1"
-auraClickBtn.BorderSizePixel = 0
-
-local auraStatsLabel = Instance.new("TextLabel", auraPanel)
-auraStatsLabel.Size = UDim2.new(1, 0, 0, 60)
-auraStatsLabel.Position = UDim2.new(0, 0, 0, 85)
-auraStatsLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-auraStatsLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
-auraStatsLabel.Font = Enum.Font.Gotham
-auraStatsLabel.TextSize = 8
-auraStatsLabel.TextWrapped = true
-auraStatsLabel.TextXAlignment = Enum.TextXAlignment.Left
-auraStatsLabel.BorderSizePixel = 0
-auraStatsLabel.Text = "💎 Clicks: 0 | ⚡ Lvl: 1 | 🔥 DMG: 1 | ⏱️ SPD: 1x"
-
-local upgrade1Btn = Instance.new("TextButton", auraPanel)
-upgrade1Btn.Size = UDim2.new(0.48, 0, 0, 35)
-upgrade1Btn.Position = UDim2.new(0, 0, 0, 150)
-upgrade1Btn.BackgroundColor3 = Color3.fromRGB(255, 100, 0)
-upgrade1Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-upgrade1Btn.Font = Enum.Font.GothamBold
-upgrade1Btn.TextSize = 9
-upgrade1Btn.Text = "🔥 +DMG"
-upgrade1Btn.BorderSizePixel = 0
-
-local upgrade2Btn = Instance.new("TextButton", auraPanel)
-upgrade2Btn.Size = UDim2.new(0.48, 0, 0, 35)
-upgrade2Btn.Position = UDim2.new(0.52, 0, 0, 150)
-upgrade2Btn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
-upgrade2Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-upgrade2Btn.Font = Enum.Font.GothamBold
-upgrade2Btn.TextSize = 9
-upgrade2Btn.Text = "⏱️ +SPEED"
-upgrade2Btn.BorderSizePixel = 0
-
-local upgrade3Btn = Instance.new("TextButton", auraPanel)
-upgrade3Btn.Size = UDim2.new(1, 0, 0, 35)
-upgrade3Btn.Position = UDim2.new(0, 0, 0, 190)
-upgrade3Btn.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
-upgrade3Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-upgrade3Btn.Font = Enum.Font.GothamBold
-upgrade3Btn.TextSize = 9
-upgrade3Btn.Text = "💎 LVL UP"
-upgrade3Btn.BorderSizePixel = 0
-
-local auraAutoBtn = Instance.new("TextButton", auraPanel)
-auraAutoBtn.Size = UDim2.new(1, 0, 0, 35)
-auraAutoBtn.Position = UDim2.new(0, 0, 0, 230)
-auraAutoBtn.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
-auraAutoBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-auraAutoBtn.Font = Enum.Font.GothamBold
-auraAutoBtn.TextSize = 10
-auraAutoBtn.Text = "🤖 AUTO (Off)"
-auraAutoBtn.BorderSizePixel = 0
-
-local auraCloseBtn = Instance.new("TextButton", auraPanel)
-auraCloseBtn.Size = UDim2.new(1, 0, 0, 30)
-auraCloseBtn.Position = UDim2.new(0, 0, 0, 270)
-auraCloseBtn.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-auraCloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-auraCloseBtn.Font = Enum.Font.GothamBold
-auraCloseBtn.TextSize = 9
-auraCloseBtn.Text = "Close"
-auraCloseBtn.BorderSizePixel = 0
-
--- AURA ПЕРЕМЕННЫЕ
-local auraClicks = settings.auraClicks
-local auraLevel = settings.auraLevel
-local auraDmg = settings.auraDmg
-local auraSpeed = settings.auraSpeed
-local auraAutoActive = false
-
-local function updateAuraUI()
-    auraClickBtn.Text = "⭐ CLICK ⭐\n+" .. auraDmg
-    auraStatsLabel.Text = "💎 " .. auraClicks .. " | ⚡ " .. auraLevel .. " | 🔥 " .. auraDmg .. " | ⏱️ " .. math.floor(auraSpeed * 10) / 10 .. "x"
-    settings.auraClicks = auraClicks
-    settings.auraLevel = auraLevel
-    settings.auraDmg = auraDmg
-    settings.auraSpeed = auraSpeed
-    saveSettings()
-end
-
--- ✅ ОБНОВЛЕНИЕ ТЕМЫ
-local function applyTheme(themeIdx)
-    ti = themeIdx
-    settings.theme = ti
-    tv = to[ti2]
-    settings.transparency = ti2
-    saveSettings()
-    
-    local t = themes[ti]
-    topBar.BackgroundColor3 = t.primary
-    topBar.BackgroundTransparency = tv
-    title.TextColor3 = t.accent
-    themeBtn.BackgroundColor3 = t.accent
-    themeBtn.BackgroundTransparency = tv
-    themeBtn.TextColor3 = t.primary
-    opacityBtn.BackgroundColor3 = t.accent
-    opacityBtn.BackgroundTransparency = tv
-    opacityBtn.TextColor3 = t.primary
-    mainBtn.BackgroundColor3 = t.accent
-    mainBtn.BackgroundTransparency = tv
-    mainBtn.TextColor3 = t.primary
-    autoBtn.BackgroundColor3 = t.accent
-    autoBtn.BackgroundTransparency = tv
-    autoBtn.TextColor3 = t.primary
-    langBtn.BackgroundColor3 = t.accent
-    langBtn.BackgroundTransparency = tv
-    langBtn.TextColor3 = t.primary
-    closeBtn.BackgroundTransparency = tv
-    statusLabel.BackgroundColor3 = t.secondary
-    statusLabel.BackgroundTransparency = tv
-    statusLabel.TextColor3 = t.accent
-end
-
--- ✅ МОЛОТ ПЕРЕМЕННЫЕ
-local ho, ao, hh, br = false, false, 0, 0
-local lastUpdate = tick()
-
--- ✅ ФУНКЦИЯ ПОИСКА МАШИНЫ
 local function gc()
-    local c = p.Character
-    if not c then return nil end
-    
-    local h = c:FindFirstChildOfClass("Humanoid")
-    if not h or not h.SeatPart then return nil end
-    
-    local cur = h.SeatPart
-    for i = 1, 8 do
-        if not cur then break end
-        if cur:IsA("Model") then
-            if cur.Parent and cur.Parent.Name == "Vehicles" then 
-                return cur 
-            end
-        end
-        cur = cur.Parent
-    end
-    return nil
+ local c=p.Character if not c then return nil end
+ local h=c:FindFirstChildOfClass("Humanoid")if not h or not h.SeatPart then return nil end
+ local cur=h.SeatPart
+ while cur do
+  if cur:IsA("Model")then
+   if cur.Parent and cur.Parent.Name=="Vehicles"then return cur end
+   if cur.Name~="Body"and cur.Name~="Engine"then return cur end
+  end
+  cur=cur.Parent
+ end
+ return nil
 end
 
--- ✅ СМЕШ (ОПТИМИЗИРОВАНО)
+local ho,ao,hh,br,cy=false,false,0,0,0
 local function sm()
-    local c = gc()
-    if not c then return false end
-    
-    local r = c.PrimaryPart or c:FindFirstChildWhichIsA("BasePart")
-    if not r then return false end
-    
-    pcall(function()
-        r.Velocity = Vector3.zero
-        r.CFrame = CFrame.new(r.Position.X, 120, r.Position.Z)
-    end)
-    
-    wait(0.08)
-    
-    pcall(function()
-        r.Velocity = Vector3.new(0, -1000, 0)
-    end)
-    
-    wait(0.7)
-    
-    if not c.Parent then 
-        br = br + 1 
-        return true 
-    end
-    return false
+ local c=gc()if not c then return false end
+ local r=c.PrimaryPart or c:FindFirstChildWhichIsA("BasePart")if not r then return false end
+ r.Velocity=Vector3.zero r.CFrame=CFrame.new(r.Position.X,200,r.Position.Z)wait(0.15)r.Velocity=Vector3.new(0,-1500,0)wait(1.0)
+ if not c.Parent then br=br+1 return true end return false
 end
 
--- ✅ ОБНОВЛЕНИЕ СТАТУСА
-local function updateStatus()
-    if tick() - lastUpdate >= 0.6 then
-        statusLabel.Text = "Status: " .. (ho and "🔨 HAMMER" or ao and "⚡ AUTO" or "✅ Ready") .. "\nHits: " .. hh .. " | Broken: " .. br
-        lastUpdate = tick()
-    end
+local hb=Instance.new("TextButton",fpg)hb.Size=UDim2.new(1,0,0,36)hb.Position=UDim2.new(0,0,0,78)hb.BackgroundColor3=C.btn hb.Font=Enum.Font.GothamBold hb.TextSize=12 hb.BorderSizePixel=0 hb.Text=T[la[...]
+Instance.new("UICorner",hb).CornerRadius=UDim.new(0,5)Instance.new("UIStroke",hb).Thickness=1.5 Instance.new("UIStroke",hb).Color=Color3.fromRGB(0,0,0)
+local ab=Instance.new("TextButton",fpg)ab.Size=UDim2.new(1,0,0,36)ab.Position=UDim2.new(0,0,0,122)ab.BackgroundColor3=C.btn ab.Font=Enum.Font.GothamBold ab.TextSize=12 ab.BorderSizePixel=0 ab.Text=T[l[...]
+Instance.new("UICorner",ab).CornerRadius=UDim.new(0,5)Instance.new("UIStroke",ab).Thickness=1.5 Instance.new("UIStroke",ab).Color=Color3.fromRGB(0,0,0)
+local hi=Instance.new("TextLabel",fpg)hi.Size=UDim2.new(1,0,0,14)hi.Position=UDim2.new(0,0,0,162)hi.BackgroundTransparency=1 hi.Text=(lang=="EN")and"If broken - rejoin"or"Сломалось - пере[...]
+
+hb.MouseButton1Click:Connect(function()
+ ho=not ho
+ if ho then if ao then ao=false ab.Text=T[lang].a ab.TextColor3=C.w ab.BackgroundColor3=C.btn end hb.Text=T[lang].ho hb.TextColor3=C.gr hb.BackgroundColor3=Color3.fromRGB(18,38,24)
+  coroutine.wrap(function()while ho do sm()hh=hh+1 sl.Text="Hits: "..hh.." | Broken: "..br.." | Auto: "..cy wait(0.3)end end)()
+ else hb.Text=T[lang].h hb.TextColor3=C.r hb.BackgroundColor3=C.btn end
+end)
+ab.MouseButton1Click:Connect(function()
+ ao=not ao
+ if ao then if ho then ho=false hb.Text=T[lang].h hb.TextColor3=C.r hb.BackgroundColor3=C.btn end ab.Text=T[lang].ao ab.TextColor3=C.gr ab.BackgroundColor3=Color3.fromRGB(40,25,10)
+  coroutine.wrap(function()while ao do local c=gc()
+   if not c then cl.Text=T[lang].resp cs()wait(3)
+   else local d=false for i=1,20 do if not ao then break end d=sm()hh=hh+1 sl.Text="Hits: "..hh.." | Broken: "..br.." | Auto: "..cy if d then break end wait(0.2)end
+    if d then cy=cy+1 sl.Text="Hits: "..hh.." | Broken: "..br.." | Auto: "..cy cl.Text=T[lang].des wait(1)cl.Text=T[lang].resp cs()wait(3)end
+   end
+  end end)()
+ else ab.Text=T[lang].a ab.TextColor3=C.w ab.BackgroundColor3=C.btn end
+end)
+
+-- SETTINGS
+local lb=Instance.new("TextButton",spg)lb.Size=UDim2.new(1,0,0,26)lb.Position=UDim2.new(0,0,0,5)lb.BackgroundColor3=C.btn lb.Font=Enum.Font.GothamBold lb.TextSize=11 lb.BorderSizePixel=0 lb.Text=T[lan[...]
+Instance.new("UICorner",lb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",lb).Thickness=1.5 Instance.new("UIStroke",lb).Color=Color3.fromRGB(0,0,0)
+lb.MouseButton1Click:Connect(function()lang=(lang=="EN")and"RU"or"EN"ul()end)
+local tt=Instance.new("TextLabel",spg)tt.Size=UDim2.new(1,0,0,16)tt.Position=UDim2.new(0,0,0,40)tt.BackgroundTransparency=1 tt.Text=T[lang].th..th[ti].name tt.TextColor3=C.w tt.Font=Enum.Font.GothamBo[...]
+local tb=Instance.new("TextButton",spg)tb.Size=UDim2.new(1,0,0,26)tb.Position=UDim2.new(0,0,0,58)tb.BackgroundColor3=C.btn tb.Font=Enum.Font.GothamBold tb.TextSize=11 tb.BorderSizePixel=0 tb.Text="CHA[...]
+Instance.new("UICorner",tb).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",tb).Thickness=1.5 Instance.new("UIStroke",tb).Color=Color3.fromRGB(0,0,0)
+tb.MouseButton1Click:Connect(function()ti=ti%#th+1 m.BackgroundColor3=th[ti].m s.BackgroundColor3=th[ti].s hdr.BackgroundColor3=th[ti].s mini.BackgroundColor3=th[ti].s tt.Text=T[lang].th..th[ti].name [...]
+local tl=Instance.new("TextLabel",spg)tl.Size=UDim2.new(1,0,0,16)tl.Position=UDim2.new(0,0,0,95)tl.BackgroundTransparency=1 tl.Text="Transparency: 25%"tl.TextColor3=C.w tl.Font=Enum.Font.GothamBold tl[...]
+local trBtn=Instance.new("TextButton",spg)trBtn.Size=UDim2.new(1,0,0,26)trBtn.Position=UDim2.new(0,0,0,113)trBtn.BackgroundColor3=C.btn trBtn.Font=Enum.Font.GothamBold trBtn.TextSize=11 trBtn.BorderSi[...]
+Instance.new("UICorner",trBtn).CornerRadius=UDim.new(0,4)Instance.new("UIStroke",trBtn).Thickness=1.5 Instance.new("UIStroke",trBtn).Color=Color3.fromRGB(0,0,0)
+trBtn.MouseButton1Click:Connect(function()ti2=ti2%#to+1 tv=to[ti2]m.BackgroundTransparency=tv s.BackgroundTransparency=tv hdr.BackgroundTransparency=tv mini.BackgroundTransparency=tv trBtn.Text=tn[ti2[...]
+
+-- NEWS
+local lgt=Instance.new("TextLabel",lpg)lgt.Size=UDim2.new(1,0,0,18)lgt.BackgroundTransparency=1 lgt.Text="WHATS NEW"lgt.TextColor3=C.w lgt.Font=Enum.Font.GothamBold lgt.TextSize=12
+local lgc=Instance.new("TextLabel",lpg)lgc.Size=UDim2.new(1,0,0,220)lgc.Position=UDim2.new(0,0,0,22)lgc.BackgroundColor3=Color3.fromRGB(35,35,35)lgc.TextColor3=C.w lgc.Font=Enum.Font.Gotham lgc.TextSi[...]
+lgc.Text=[[v9.8 - Fixed:
++ Language switch works
++ 25% transparency default
++ 10 themes
++ Minimize & close
++ Molot 200/-1500
++ Auto farm + respawn]]
+
+local function ul()
+ local L=T[lang]
+ fbt.Text=L.farm sbt.Text=L.set lbt.Text=L.news
+ hb.Text=ho and L.ho or L.h ab.Text=ao and L.ao or L.a
+ hi.Text=(lang=="EN")and"If broken - rejoin"or"Сломалось - перезайди"
+ tt.Text=L.th..th[ti].name lb.Text=L.lb
 end
 
--- ✅ СОБЫТИЯ
+-- SPAWN
+local function fs()
+ local pg=p:WaitForChild("PlayerGui")
+ for _,g in pairs(pg:GetChildren())do if g:IsA("ScreenGui")then for _,o in pairs(g:GetDescendants())do if(o:IsA("TextButton")or o:IsA("ImageButton"))and o.Visible and o.Active then
+  local t=o:IsA("TextButton")and o.Text or""
+  if o.Name:lower():find("spawn")or t:lower():find("spawn")or t:lower():find("car")or t:lower():find("free")then if not t:lower():find("vip")then return o end end
+ end end end end return nil
+end
+local function cs()
+ local b=fs()if not b then return false end
+ if firesignal and b.MouseButton1Click then pcall(function()firesignal(b.MouseButton1Click)end)end
+ pcall(function()local v=game:GetService("VirtualInputManager")local pos=b.AbsolutePosition+b.AbsoluteSize/2 pos=Vector2.new(pos.X+45,pos.Y+40)v:SendMouseButtonEvent(pos.X,pos.Y,0,true,game,1)wait(0.0[...]
+end
 
--- СЕКРЕТНАЯ КНОПКА
-secretBtn.MouseButton1Click:Connect(function()
-    auraPanel.Visible = not auraPanel.Visible
-    statusLabel.Visible = not statusLabel.Visible
-end)
-
--- AURA CLICK
-auraClickBtn.MouseButton1Click:Connect(function()
-    auraClicks = auraClicks + auraDmg
-    updateAuraUI()
-end)
-
--- UPGRADE 1
-upgrade1Btn.MouseButton1Click:Connect(function()
-    if auraClicks >= 100 then
-        auraClicks = auraClicks - 100
-        auraDmg = auraDmg + 1
-        updateAuraUI()
-    end
-end)
-
--- UPGRADE 2
-upgrade2Btn.MouseButton1Click:Connect(function()
-    if auraClicks >= 150 then
-        auraClicks = auraClicks - 150
-        auraSpeed = auraSpeed + 0.5
-        updateAuraUI()
-    end
-end)
-
--- UPGRADE 3
-upgrade3Btn.MouseButton1Click:Connect(function()
-    if auraClicks >= 250 then
-        auraClicks = auraClicks - 250
-        auraLevel = auraLevel + 1
-        auraDmg = auraDmg + auraLevel
-        updateAuraUI()
-    end
-end)
-
--- AUTO AURA
-auraAutoBtn.MouseButton1Click:Connect(function()
-    auraAutoActive = not auraAutoActive
-    auraAutoBtn.Text = (auraAutoActive and "🤖 AUTO (On)" or "🤖 AUTO (Off)")
-    auraAutoBtn.BackgroundColor3 = (auraAutoActive and Color3.fromRGB(255, 100, 100) or Color3.fromRGB(100, 255, 100))
-    
-    if auraAutoActive then
-        coroutine.wrap(function()
-            while auraAutoActive do
-                auraClicks = auraClicks + auraDmg
-                updateAuraUI()
-                wait(0.4 / auraSpeed)
-            end
-        end)()
-    end
-end)
-
--- CLOSE AURA
-auraCloseBtn.MouseButton1Click:Connect(function()
-    auraPanel.Visible = false
-    statusLabel.Visible = true
-end)
-
--- HAMMER
-mainBtn.MouseButton1Click:Connect(function()
-    ho = not ho
-    if ho then
-        if ao then 
-            ao = false 
-            autoBtn.Text = "AUTO" 
-        end
-        mainBtn.Text = "STOP"
-        coroutine.wrap(function()
-            while ho do
-                if sm() then 
-                    hh = hh + 1 
-                end
-                updateStatus()
-                wait(0.2)
-            end
-        end)()
-    else
-        mainBtn.Text = "FARM"
-        updateStatus()
-    end
-end)
-
--- AUTO FARM
-autoBtn.MouseButton1Click:Connect(function()
-    ao = not ao
-    if ao then
-        if ho then 
-            ho = false 
-            mainBtn.Text = "FARM" 
-        end
-        autoBtn.Text = "STOP"
-        coroutine.wrap(function()
-            while ao do
-                local c = gc()
-                if not c then 
-                    wait(1.5)
-                else
-                    for i = 1, 12 do
-                        if not ao then break end
-                        if sm() then 
-                            hh = hh + 1 
-                        end
-                        updateStatus()
-                        wait(0.12)
-                    end
-                end
-            end
-        end)()
-    else
-        autoBtn.Text = "AUTO"
-        updateStatus()
-    end
-end)
-
--- THEME
-themeBtn.MouseButton1Click:Connect(function()
-    ti = ti % #themes + 1
-    applyTheme(ti)
-end)
-
--- OPACITY
-opacityBtn.MouseButton1Click:Connect(function()
-    ti2 = ti2 % #to + 1
-    applyTheme(ti)
-end)
-
--- LANGUAGE
-langBtn.MouseButton1Click:Connect(function()
-    lang = (lang == "EN") and "RU" or "EN"
-    settings.lang = lang
-    saveSettings()
-    langBtn.Text = (lang == "EN") and "EN" or "RU"
-end)
-
--- CLOSE
-closeBtn.MouseButton1Click:Connect(function()
-    pcall(function() sg:Destroy() end)
-end)
-
--- ✅ УВЕДОМЛЕНИЕ
-game.StarterGui:SetCore("SendNotification", {
-    Title = "💎 DAMIR HUB v12 DELTA",
-    Text = "✨ Запущено! Нажми на стрелку (←) для AURA!",
-    Duration = 3
-})
+ul()
+game.StarterGui:SetCore("SendNotification",{Title="DAMIR HUB",Text="v9.8 loaded!",Duration=5})
+                                                        
